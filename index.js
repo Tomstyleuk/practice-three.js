@@ -1,6 +1,6 @@
 window.addEventListener("DOMContentLoaded", init);
 
-// ここに処理を追加していきます
+// function init() => ここに処理を追加していきます
 function init() {
   const width = 960;
   const height = 540;
