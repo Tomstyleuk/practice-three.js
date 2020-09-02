@@ -25,10 +25,9 @@ function init() {
   /* 4. 立方体を作る. 立方体はメッシュという表示オブジェクトを使用して作成します。メッシュを作るには、ジオメトリ（形状）とマテリアル（素材）を用意する必要があります。ジオメトリは頂点情報や面情報を持っています。Three.jsにはさまざまなジオメトリが用意されていますが、今回は立方体や直方体のような箱状の形状を生成するためのBoxGeometryを使用します。 */
 
   // new THREE.BoxGeometry(幅, 高さ, 奥行き)
-  const geometry = new THREE.BoxGeometry(500, 500, 500);
+  const geometry = new THREE.BoxGeometry(300, 500, 300);
 
   /* マテリアルは色や質感の情報を持っています。今回は青色の箱を表示させたいので、以下のようにマテリアルを生成します。 */
-
   const material = new THREE.MeshStandardMaterial({
     color: 0x0000ff
   });
