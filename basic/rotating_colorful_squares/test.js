@@ -1,5 +1,7 @@
-/* rotating colourful squares
+/* ライブラリのセットアップから3D画面への表示および直方体の回転まで
+rotating colourful squares
 https://ics.media/tutorial-three/quickstart/ */
+
 window.addEventListener('load', init);
 
 //init() -> schreibt hier function von three.js
