@@ -11,10 +11,12 @@ function init() {
     const height = 540;
 
 
-    //1. WebGLのレンダリングをするためのレンダラーを作成Erstellung Rendere for WebGL Rendering, Geben Sie ein in HTML platziertes Canvas-Element als Argument an
+    //1. WebGLのレンダリングをするためのレンダラーを作成. Erstellung Rendere for WebGL Rendering, Geben Sie ein in HTML platziertes Canvas-Element als Argument an
     const renderer = new THREE.WebGLRenderer({
         canvas: document.querySelector('#myCanvas')
     });
+
+    //setPixelRatio（デバイスの解像度） レンダラーのサイズを調整する
 
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(width, height);
@@ -31,7 +33,7 @@ function init() {
 
     //5.立方体を作る. 立方体はメッシュという表示オブジェクトを使用して作成します。メッシュを作るには、ジオメトリ（形状）とマテリアル（素材）の二種類を用意する必要があります
     //立方体や直方体のような箱状の形状を生成するためのBoxGeometryを使用
-    const geometry = new THREE.TorusGeometry(200, 200, 200);
+    const geometry = new THREE.BoxGeometry(200, 200, 200);
     const material = new THREE.MeshNormalMaterial();
 
     // Erstellung Mesh(立方体) => new THREE.Mesh(ジオメトリ,マテリアル)
@@ -40,7 +42,7 @@ function init() {
     // add const box(Mesh) into the scene
     scene.add(box);
 
-    //6. Animation. JavaScriptでアニメーションをさせるには、時間経過で関数を呼び続ける必要がある。そのために、requestAnimationFrame()というグローバルメソッドを使用して、requestAnimationFrame()は引数として渡された関数を、毎フレーム実行します。
+    //6. Animation => JavaScriptでアニメーションをさせるには、時間経過で関数を呼び続ける必要がある。そのために、requestAnimationFrame()というグローバルメソッドを使用して、requestAnimationFrame()は引数として渡された関数を、毎フレーム実行します。
     tick();
     function tick() {
         
