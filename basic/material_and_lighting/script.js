@@ -8,12 +8,11 @@
 // ページの読み込みを待つ
 window.addEventListener('load', init);
 
+function init() {
+
 // サイズを指定
 const width = 960;
 const height = 540;
-
-
-function init() {
 
   // 1.レンダラーを作成
   const renderer = new THREE.WebGLRenderer({
@@ -30,10 +29,22 @@ function init() {
 
   // 4.球体を作成
   const geometry = new THREE.SphereGeometry(300, 30, 30);
-  const material = new THREE.MeshStandardMaterial( {color: 0xFF0000} );
+//   const material = new THREE.MeshStandardMaterial( {color: 0xFF0000} );
+
+  /*//////////////// 画像を読み込む ////////////////
+  画像を使うには読み込み処理を作る必要があります。THREE.TextureLoaderクラスを使って */
+  const loader = new THREE.TextureLoader();
+  const texture = loader.load('img/earthmap1k.jpg');
+
+  // マテリアルにテクスチャーを設定
+  const material = new THREE.MeshStandardMaterial({
+    map: texture
+  });
+  ////////////////////////////////////////////////
   
   // 5.メッシュを作成
   const mesh = new THREE.Mesh(geometry, material);
+
 
   // 6.3D空間にメッシュを追加
   scene.add(mesh);
@@ -75,4 +86,4 @@ function init() {
   }    
 
 
-} // ENDE init
+}; // ENDE init

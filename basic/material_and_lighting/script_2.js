@@ -1,9 +1,3 @@
-/* https://ics.media/tutorial-three/material_basic/
-    画像をマテリアルに使用する方法
-
-    おそらく一番使用頻度が高いと思われれるのが、画像を使ったマテリアルです。画像はGPUの制約から、2の累乗の高さ・幅である画像のみが利用できます。
-*/
-
 // ページの読み込みを待つ
 window.addEventListener('load', init);
 
@@ -14,7 +8,7 @@ const height = 540;
 function init() {
   // レンダラーを作成
   const renderer = new THREE.WebGLRenderer({
-    canvas: document.querySelector('#canvas2')
+    canvas: document.querySelector('#myCanvas')
   });
   renderer.setSize(width, height);
 
@@ -29,7 +23,7 @@ function init() {
   const geometry = new THREE.SphereGeometry(300, 30, 30);
   // 画像を読み込む
   const loader = new THREE.TextureLoader();
-  const texture = loader.load('imgs/earthmap1k.jpg');
+  const texture = loader.load('img/earthmap1k.jpg');
   // マテリアルにテクスチャーを設定
   const material = new THREE.MeshStandardMaterial({
     map: texture
@@ -56,6 +50,4 @@ function init() {
 
     requestAnimationFrame(tick);
   }
-
-
-}// ENDE init
+}
