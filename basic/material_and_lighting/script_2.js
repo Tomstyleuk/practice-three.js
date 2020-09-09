@@ -1,11 +1,11 @@
 // ページの読み込みを待つ
 window.addEventListener('load', init);
 
+function init() {
 // サイズを指定
 const width = 960;
 const height = 540;
 
-function init() {
   // レンダラーを作成
   const renderer = new THREE.WebGLRenderer({
     canvas: document.querySelector('#myCanvas')
@@ -16,7 +16,7 @@ function init() {
   const scene = new THREE.Scene();
 
   // カメラを作成
-  const camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
+  const camera = new THREE.PerspectiveCamera(45, width / height);
   camera.position.set(0, 0, +1000);
 
   // 球体を作成
@@ -50,4 +50,4 @@ function init() {
 
     requestAnimationFrame(tick);
   }
-}
+} //ENDE init
