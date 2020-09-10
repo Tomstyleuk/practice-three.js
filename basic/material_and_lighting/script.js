@@ -1,5 +1,5 @@
 /* https://ics.media/tutorial-three/material_basic/
-3Dの見栄えを決定するマテリアルとライティングについて
+-3Dの見栄えを決定するマテリアルとライティングについて
 マテリアルとは物体の質感設定のこと。3Dで形状を作る際には、見栄えを決める「マテリアル」を指定することで、たとえば、着色や画像・陰影の割り当て、ライティングの反射などを適用できます。
 
 代表的なマテリアルとして「単色塗りのマテリアル」と「画像を使ったマテリアル」の二種類があります。
@@ -14,7 +14,7 @@ function init() {
 const width = 960;
 const height = 540;
 
-  // 1.レンダラーを作成
+  // 1.レンダラーを作成 canvasを使用して、html内のid:myCanvasに出力する宣言
   const renderer = new THREE.WebGLRenderer({
       canvas: document.querySelector('#myCanvas')
   });
@@ -29,14 +29,15 @@ const height = 540;
 
   // 4.球体を作成
   const geometry = new THREE.SphereGeometry(300, 30, 30);
-//   const material = new THREE.MeshStandardMaterial( {color: 0xFF0000} );
+//   const material = new THREE.MeshStandardMaterial( {color: 0xFF0000} );  //単色塗りのマテリアルの場合
+
 
   /*//////////////// 画像を読み込む ////////////////
-  画像を使うには読み込み処理を作る必要があります。THREE.TextureLoaderクラスを使って */
+  画像を使うには読み込み処理を作る必要があります。THREE.TextureLoaderクラスを使う */
   const loader = new THREE.TextureLoader();
   const texture = loader.load('img/earthmap1k.jpg');
 
-  // マテリアルにテクスチャーを設定
+  // マテリアルにテクスチャーを設定 => マテリアルに画像を使用する
   const material = new THREE.MeshStandardMaterial({
     map: texture
   });
@@ -53,6 +54,7 @@ const height = 540;
   /* ライトを作る
     ライティングがないと陰影はなく画面が真っ暗となり、3Dの質感がわからないため,THREE.DirectionalLightクラスのインスタンスを作成しています。THREE.DirectionalLightクラスは指定した方向からライトを適用でき, これを平行光源といいます。 
     Three.jsで使用できるライティングには以下の種類があります。
+
     1.THREE.DirectionalLightクラス
     平行光源。ライトの位置と方向を指定し平行に到達する光として使用できます。
 
