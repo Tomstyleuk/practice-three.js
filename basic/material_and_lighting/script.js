@@ -10,9 +10,9 @@ window.addEventListener('load', init);
 
 function init() {
 
-// サイズを指定
-const width = 960;
-const height = 540;
+  // サイズを指定
+  const width = 960;
+  const height = 540;
 
   // 1.レンダラーを作成 canvasを使用して、html内のid:myCanvasに出力する宣言
   const renderer = new THREE.WebGLRenderer({
