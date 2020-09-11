@@ -17,7 +17,6 @@ function init() {
     });
 
     //setPixelRatio（デバイスの解像度） レンダラーのサイズを調整する
-
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(width, height);
 
