@@ -14,16 +14,19 @@ function init() {
   renderer.setClearColor(0x000000, 0.0);
   document.getElementById('canvas').appendChild(renderer.domElement);
 
+  // 2.シーンを作成
   scene = new THREE.Scene();
 
+  // 3.カメラを作成
   camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
   camera.position.z = 400;
   scene.add(camera);
 
   circle = new THREE.Object3D();
-  skelet = new THREE.Object3D();
+  skelet = new THREE.Object3D(); //skelet = 骨格
   particle = new THREE.Object3D();
 
+  // シーンに追加
   scene.add(circle);
   scene.add(skelet);
   scene.add(particle);
