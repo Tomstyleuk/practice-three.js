@@ -1,6 +1,11 @@
+html {
+    background-color: white;
+}
+
 body {
     margin: 0;
     height: 100vh;
+    background-color: white;
 }
 
  #myCanvas {
