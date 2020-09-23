@@ -37,6 +37,11 @@ window.addEventListener('resize', () => {
     camera.updateProjectionMatrix();
 })
 
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
+
+
 //7.create a box geometry             (x, y, z)
 const geometry = new THREE.BoxGeometry(1, 1, 1);
 
@@ -46,6 +51,27 @@ const material = new THREE.MeshLambertMaterial({color: 0xFFCC00});
 //9. combine into mash annd then mesh add into scene
 const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
+
+/*------------ add another meshes ------------*/
+// const geometry2 = new THREE.BoxGeometry(1, 1, 1);
+// const material2 = new THREE.MeshLambertMaterial({color: 0xFFCC00});
+// const mesh2= new THREE.Mesh(geometry2, material2);
+// mesh.position.y = 2;
+// scene.add(mesh2);
+
+/*------------ add more cubics  ------------ */
+let meshX = -10;
+for(let i = 0; i < -15; i++) {
+    // const geometry2 = new THREE.BoxGeometry(1, 1, 1);
+    // const material2 = new THREE.MeshLambertMaterial({color: 0xFFCC00});
+    // const mesh = new THREE.Mesh(geometry2, material2);
+
+    mesh.position.x = (Math.random() - 0.5) * 10;
+    mesh.position.y = (Math.random() - 0.5) * 10;
+    mesh.position.z = (Math.random() - 0.5) * 10;
+    scene.add(mesh);
+    meshX =+ 1;
+}
 
 
 
@@ -70,14 +96,40 @@ const render = function() {
     // mesh.scale.x += 0.01;
 }
 
+function onMouseMove(event) {
+    event.preventDefault();
+
+    mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+    mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
+    raycaster.setFromCamera(mouse, camera);
+
+    // when you hover the mouse, cubics are moving 
+    const intersects = raycaster.intersectObjects(scene.children, true);
+    for (let i = 0; i < intersects.length; i++) {
+        //intersects[i].object.material.color.set(0xff0000); //mousemove => color change
+
+        //TimelineMax => TweenMax method
+        this.tl = new TimelineMax().delay(.3);   //cube rotation
+        //this.tl = new TimelineMax({paused: true}); //not rotation
+        this.tl.to(intersects[i].object.scale, 1, {x: 2, ease: Expo.easeOut});
+        this.tl.to(intersects[i].object.scale, .5, {x: .5, ease: Expo.easeOut});
+        this.tl.to(intersects[i].object.position, .5, {x: 2, ease: Expo.easeOut});
+        this.tl.to(intersects[i].object.rotation, .5, {y: Math.PI* 1.5, ease: Expo.easeOut}, "=-1.5"); //回転数
+    }
+
+
+}
+
+
 render();
 
-//TimelineMax => TweenMax method
-this.tl = new TimelineMax().delay(.3);
-this.tl.to(mesh.scale, 1, {x: 2, ease: Expo.easeOut});
-this.tl.to(mesh.scale, .5, {x: .5, ease: Expo.easeOut});
-this.tl.to(mesh.position, .5, {x: 2, ease: Expo.easeOut});
-this.tl.to(mesh.rotation, .5, {y: Math.PI* 2.5, ease: Expo.easeOut}, "=-1.5"); //回転数
+/* click event. when you click elements in body, they rotate */
+// document.body.addEventListener('click', () => {
+//     this.tl.play(); 
+// })
+
+window.addEventListener('mousemove', onMouseMove);
 
 
 
