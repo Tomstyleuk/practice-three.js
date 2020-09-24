@@ -62,15 +62,15 @@ scene.add(mesh);
 /*------------ add more cubics  ------------ */
 let meshX = -10;
 for(let i = 0; i < -15; i++) {
+    console.log(i);
     // const geometry2 = new THREE.BoxGeometry(1, 1, 1);
     // const material2 = new THREE.MeshLambertMaterial({color: 0xFFCC00});
-    // const mesh = new THREE.Mesh(geometry2, material2);
-
+    let mesh = new THREE.Mesh(geometry, material);
     mesh.position.x = (Math.random() - 0.5) * 10;
     mesh.position.y = (Math.random() - 0.5) * 10;
     mesh.position.z = (Math.random() - 0.5) * 10;
     scene.add(mesh);
-    meshX =+ 1;
+    meshX += 1;
 }
 
 
@@ -91,8 +91,8 @@ const render = function() {
     renderer.render(scene, camera);
 
     //回転する
-    // mesh.rotation.x += 0.01; // 縦に動く
-    // mesh.rotation.y += 0.01; // 横に動く
+    mesh.rotation.x += 0.01; // 縦に動く
+    mesh.rotation.y += 0.01; // 横に動く
     // mesh.scale.x += 0.01;
 }
 
@@ -118,8 +118,7 @@ function onMouseMove(event) {
         this.tl.to(intersects[i].object.rotation, .5, {y: Math.PI* 1.5, ease: Expo.easeOut}, "=-1.5"); //回転数
     }
 
-
-}
+}   // ENDE onMouseMove
 
 
 render();
