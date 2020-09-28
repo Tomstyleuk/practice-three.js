@@ -59,10 +59,9 @@ scene.add(mesh);
 // mesh.position.y = 2;
 // scene.add(mesh2);
 
-/*------------ add more cubics  ------------ */
-let meshX = -10;
-for(let i = 0; i < -15; i++) {
-    console.log(i);
+/*------------ add more cubes  ------------ */
+// const meshX = -10;
+for(let meshX = 0; meshX < 15; meshX++) {
     // const geometry2 = new THREE.BoxGeometry(1, 1, 1);
     // const material2 = new THREE.MeshLambertMaterial({color: 0xFFCC00});
     let mesh = new THREE.Mesh(geometry, material);
@@ -70,9 +69,8 @@ for(let i = 0; i < -15; i++) {
     mesh.position.y = (Math.random() - 0.5) * 10;
     mesh.position.z = (Math.random() - 0.5) * 10;
     scene.add(mesh);
-    meshX += 1;
+    meshX + 1;
 }
-
 
 
 //10.
@@ -91,8 +89,8 @@ const render = function() {
     renderer.render(scene, camera);
 
     //回転する
-    mesh.rotation.x += 0.01; // 縦に動く
-    mesh.rotation.y += 0.01; // 横に動く
+    // mesh.rotation.x += 0.01; // 縦に動く
+    // mesh.rotation.y += 0.01; // 横に動く
     // mesh.scale.x += 0.01;
 }
 
