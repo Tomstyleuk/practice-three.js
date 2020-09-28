@@ -46,7 +46,7 @@ const mouse = new THREE.Vector2();
 const geometry = new THREE.BoxGeometry(1, 1, 1);
 
 //8.create a mesh Material
-const material = new THREE.MeshLambertMaterial({color: 0xFFCC00});
+const material = new THREE.MeshLambertMaterial({color: 0xF7F7F7});
 
 //9. combine into mash annd then mesh add into scene
 const mesh = new THREE.Mesh(geometry, material);
@@ -78,9 +78,14 @@ for(let meshX = 0; meshX < 15; meshX++) {
 
 
 //9. light
-const light = new THREE.PointLight(0xFFFFFF, 1, 500);
-light.position.set(10, 0, 25);
+const light = new THREE.PointLight(0xFFFFFF, 1, 1000);
+light.position.set(0,0,0);
 scene.add(light);
+
+//9. add another light
+const light2 = new THREE.PointLight(0xFFFFFF, 2, 1000);
+light2.position.set(0, 0, 25);
+scene.add(light2);
 
 const render = function() {
     requestAnimationFrame(render);
