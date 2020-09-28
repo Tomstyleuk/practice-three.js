@@ -52,7 +52,7 @@ const material = new THREE.MeshLambertMaterial({color: 0xFFCC00});
 const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
 
-/*------------ add another meshes ------------*/
+/*------------ add one more mesh ------------*/
 // const geometry2 = new THREE.BoxGeometry(1, 1, 1);
 // const material2 = new THREE.MeshLambertMaterial({color: 0xFFCC00});
 // const mesh2= new THREE.Mesh(geometry2, material2);
@@ -62,8 +62,6 @@ scene.add(mesh);
 /*------------ add more cubes  ------------ */
 // const meshX = -10;
 for(let meshX = 0; meshX < 15; meshX++) {
-    // const geometry2 = new THREE.BoxGeometry(1, 1, 1);
-    // const material2 = new THREE.MeshLambertMaterial({color: 0xFFCC00});
     let mesh = new THREE.Mesh(geometry, material);
     mesh.position.x = (Math.random() - 0.5) * 10;
     mesh.position.y = (Math.random() - 0.5) * 10;
