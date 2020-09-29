@@ -34,7 +34,7 @@ function init() {
 
     //7. set a directional light 
     const directionalLight = new THREE.DirectionalLight(0xffffff);
-    directionalLight.position.set(1, 1, 1);
+    directionalLight.position.set(10, 10, 10);
     scene.add(directionalLight);
 
     //7.環境光を作成
@@ -45,7 +45,7 @@ function init() {
     const geometryList = [
         new THREE.SphereGeometry(50),  // 球体
         new THREE.BoxGeometry(100, 100, 100),      // 直方体 
-        new THREE.PlaneGeometry(100, 100),    // 平面
+        new THREE.PlaneGeometry(200, 200),    // 平面
         new THREE.TetrahedronGeometry(100, 0),  // カプセル形状
         new THREE.ConeGeometry(100, 100, 32),     // 三角錐
         new THREE.CylinderGeometry(50, 50, 100, 32), // 円柱
@@ -68,6 +68,7 @@ function init() {
     //loop event
     function tick() {
         //rotate the container
+        // container.rotation.x += 0.01;
         container.rotation.y += 0.01;
 
         //renderer
