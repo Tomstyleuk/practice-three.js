@@ -37,6 +37,9 @@ window.addEventListener('resize', () => {
     camera.updateProjectionMatrix();
 })
 
+/*画面をタッチした時に、画面上である点をタッチした時に、その点と重なったオブジェクトは全てにタッチされたことになる
+　プログラミングでは、RaycasterはEventSystemやCanvasと併用され、ユーザーが画面をタッチすると、
+ Canvasオブジェクト上にある全てのオブジェクトに対して、透明な線がどのオブジェクトに当たったのかを判定する */
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 
@@ -91,7 +94,7 @@ const render = function() {
     requestAnimationFrame(render);
     renderer.render(scene, camera);
 
-    //回転する
+    // rotate the cubes, 回転する
     // mesh.rotation.x += 0.01; // 縦に動く
     // mesh.rotation.y += 0.01; // 横に動く
     // mesh.scale.x += 0.01;
