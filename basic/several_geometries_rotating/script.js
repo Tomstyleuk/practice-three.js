@@ -90,7 +90,7 @@ function init() {
     
         raycaster.setFromCamera(mouse, camera);
     
-        // when you hover the mouse, cubics are moving 
+        // when you hover cubics, they are moving 
         const intersects = raycaster.intersectObjects(scene.children, true);
         for (let i = 0; i < intersects.length; i++) {
             //intersects[i].object.material.color.set(0xff0000); //mousemove => color change
@@ -108,7 +108,6 @@ function init() {
     window.addEventListener('mousemove', onMouseMove);
 
     tick();
-
     //loop event
     function tick() {
         //rotate the container
