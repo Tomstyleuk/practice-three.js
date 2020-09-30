@@ -61,6 +61,7 @@ scene.add(mesh);
 // mesh.position.y = 2;
 // scene.add(mesh2);
 
+
 /*------------ add more cubes  ------------ */
 // const meshX = -10;
 for(let meshX = 0; meshX < 15; meshX++) {
@@ -100,6 +101,7 @@ const render = function() {
 }
 
 function onMouseMove(event) {
+    
     event.preventDefault();
 
     mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
