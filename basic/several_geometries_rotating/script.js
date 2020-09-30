@@ -62,7 +62,6 @@ function init() {
 
         // 円周上に配置
         mesh.position.x = 400 * Math.sin(( index / geometryList.length ) * Math.PI *2);
-
         mesh.position.z = 400 * Math.cos(( index / geometryList.length ) * Math.PI *2);
     });
 
@@ -93,7 +92,11 @@ function init() {
         // when you hover cubics, they are moving 
         const intersects = raycaster.intersectObjects(scene.children, true);
         for (let i = 0; i < intersects.length; i++) {
-            //intersects[i].object.material.color.set(0xff0000); //mousemove => color change
+            //when mousemove => randomly cubic's color is changing 
+            const r = Math.round(Math.random() * 255);
+            const g = Math.round(Math.random() * 255);
+            const b = Math.round(Math.random() * 255);
+            intersects[i].object.material.color.set(`rgb(${r},${g},${b})`); 
     
             //TimelineMax => TweenMax method
             this.tl = new TimelineMax().delay(.3);   //cube rotation
@@ -101,7 +104,7 @@ function init() {
             this.tl.to(intersects[i].object.scale, 1, {x: 2, ease: Expo.easeOut});
             this.tl.to(intersects[i].object.scale, .5, {x: .5, ease: Expo.easeOut});
             this.tl.to(intersects[i].object.position, .5, {x: 2, ease: Expo.easeOut});
-            this.tl.to(intersects[i].object.rotation, .5, {y: Math.PI* 1.5, ease: Expo.easeOut}, "=-1.5"); //回転数
+            this.tl.to(intersects[i].object.rotation, .5, {y: Math.PI* 0.5, ease: Expo.easeOut}, "=-1.5"); //回転数
         }
     }   // ENDE onMouseMove
 
