@@ -65,6 +65,7 @@ scene.add(mesh);
 /*------------ add more cubes  ------------ */
 // const meshX = -10;
 for(let meshX = 0; meshX < 15; meshX++) {
+
     let mesh = new THREE.Mesh(geometry, material);
     mesh.position.x = (Math.random() - 0.5) * 10;
     mesh.position.y = (Math.random() - 0.5) * 10;
@@ -112,7 +113,13 @@ function onMouseMove(event) {
     // when you hover the mouse, cubics are moving 
     const intersects = raycaster.intersectObjects(scene.children, true);
     for (let i = 0; i < intersects.length; i++) {
-        //intersects[i].object.material.color.set(0xff0000); //mousemove => color change
+
+        //when mousemove => randomly cubic's color is changing 
+        const r = Math.round(Math.random() * 255);
+        const g = Math.round(Math.random() * 255);
+        const b = Math.round(Math.random() * 255);
+        intersects[i].object.material.color.set(`rgb(${r},${g},${b})`); 
+        //intersects[i].object.material.color.set(0xff0000);
 
         //TimelineMax => TweenMax method
         this.tl = new TimelineMax().delay(.3);   //cube rotation
