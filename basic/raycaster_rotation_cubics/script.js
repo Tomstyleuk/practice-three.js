@@ -68,8 +68,8 @@ for(let meshX = 0; meshX < 15; meshX++) {
 
     let mesh = new THREE.Mesh(geometry, material);
     mesh.position.x = (Math.random() - 0.5) * 10;
-    mesh.position.y = (Math.random() - 0.5) * 10;
-    mesh.position.z = (Math.random() - 0.5) * 10;
+    mesh.position.y = (Math.random() - 0.5) * -15;
+    mesh.position.z = (Math.random() - 0.5) * -5;
     scene.add(mesh);
     meshX + 1;
 }
@@ -127,6 +127,8 @@ function onMouseMove(event) {
         this.tl.to(intersects[i].object.scale, 1, {x: 2, ease: Expo.easeOut});
         this.tl.to(intersects[i].object.scale, .5, {x: .5, ease: Expo.easeOut});
         this.tl.to(intersects[i].object.position, .5, {x: 2, ease: Expo.easeOut});
+        this.tl.to(intersects[i].object.position, .15, {y: 2, ease: Expo.easeOut}); //これを追加したら、hover後は全部一箇所に集まり重なる
+        this.tl.to(intersects[i].object.position, .95, {z: 2, ease: Expo.easeOut}); //これを追加したら、hover後は全部一箇所に集まり重なる
         this.tl.to(intersects[i].object.rotation, .5, {y: Math.PI* 1.5, ease: Expo.easeOut}, "=-1.5"); //回転数
     }
 }   // ENDE onMouseMove
