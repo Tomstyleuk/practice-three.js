@@ -51,6 +51,7 @@ function init() {
         new THREE.CylinderGeometry(50, 50, 100, 32), // 円柱
         new THREE.TorusGeometry(50, 30, 16, 100)     // ドーナツ形状
     ];
+
     geometryList.map(( geometry, index ) => {
         const mesh = new THREE.Mesh(geometry, material);
 
@@ -63,6 +64,47 @@ function init() {
         mesh.position.z = 400 * Math.cos(( index / geometryList.length ) * Math.PI *2);
     });
 
+    //set responsive a window size
+    window.addEventListener('resize', () => {
+        renderer.setSize(width, height);
+
+        //readjust a camera aspect ratio, カメラのアスペクト比を正す
+        camera.aspect = width / height;
+
+        camera.updateProjectionMatrix();
+    })
+
+    /* raycaster => 画面をタッチした時に、画面上である点をタッチした時に、その点と重なったオブジェクトは全てにタッチされたことになる
+    プログラミングでは、RaycasterはEventSystemやCanvasと併用され、ユーザーが画面をタッチすると、
+    Canvasオブジェクト上にある全てのオブジェクトに対して、透明な線がどのオブジェクトに当たったのかを判定する */
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+
+    function onMouseMove(event) {
+        event.preventDefault();
+    
+        mouse.x = ( event.clientX / width ) * 2 - 1;
+        mouse.y = - ( event.clientY / height ) * 2 + 1;
+    
+        raycaster.setFromCamera(mouse, camera);
+    
+        // when you hover the mouse, cubics are moving 
+        const intersects = raycaster.intersectObjects(scene.children, true);
+        for (let i = 0; i < intersects.length; i++) {
+            //intersects[i].object.material.color.set(0xff0000); //mousemove => color change
+    
+            //TimelineMax => TweenMax method
+            this.tl = new TimelineMax().delay(.3);   //cube rotation
+            //this.tl = new TimelineMax({paused: true}); //not rotation
+            this.tl.to(intersects[i].object.scale, 1, {x: 2, ease: Expo.easeOut});
+            this.tl.to(intersects[i].object.scale, .5, {x: .5, ease: Expo.easeOut});
+            this.tl.to(intersects[i].object.position, .5, {x: 2, ease: Expo.easeOut});
+            this.tl.to(intersects[i].object.rotation, .5, {y: Math.PI* 1.5, ease: Expo.easeOut}, "=-1.5"); //回転数
+        }
+    }   // ENDE onMouseMove
+
+    window.addEventListener('mousemove', onMouseMove);
+
     tick();
 
     //loop event
@@ -73,7 +115,6 @@ function init() {
 
         //renderer
         renderer.render(scene, camera);
-
         requestAnimationFrame(tick);
     }
 

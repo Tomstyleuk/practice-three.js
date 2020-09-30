@@ -37,7 +37,7 @@ window.addEventListener('resize', () => {
     camera.updateProjectionMatrix();
 })
 
-/*画面をタッチした時に、画面上である点をタッチした時に、その点と重なったオブジェクトは全てにタッチされたことになる
+/*raycaster => 画面をタッチした時に、画面上である点をタッチした時に、その点と重なったオブジェクトは全てにタッチされたことになる
 　プログラミングでは、RaycasterはEventSystemやCanvasと併用され、ユーザーが画面をタッチすると、
  Canvasオブジェクト上にある全てのオブジェクトに対して、透明な線がどのオブジェクトに当たったのかを判定する */
 const raycaster = new THREE.Raycaster();
@@ -121,7 +121,6 @@ function onMouseMove(event) {
         this.tl.to(intersects[i].object.position, .5, {x: 2, ease: Expo.easeOut});
         this.tl.to(intersects[i].object.rotation, .5, {y: Math.PI* 1.5, ease: Expo.easeOut}, "=-1.5"); //回転数
     }
-
 }   // ENDE onMouseMove
 
 
