@@ -13,6 +13,7 @@ function init() {
         canvas: document.querySelector('#myCanvas')
     });
     renderer.setSize(width, height);
+    renderer.setClearColor("#e5e5e5");  //set background-color
 
     //3.creat a scene
     const scene = new THREE.Scene();
@@ -28,7 +29,8 @@ function init() {
 
     //6. create a material 
     const material = new THREE.MeshStandardMaterial({
-        color: 0xff0000,
+        // color: 0xff0000, //red
+        color: 0xF7F7F7,    //light grey
         side: THREE.DoubleSide  //add shadow on front and back side
     });
 
@@ -43,11 +45,11 @@ function init() {
 
     //8.create an array for geometries
     const geometryList = [
-        new THREE.SphereGeometry(50),  // 球体
+        new THREE.SphereGeometry(50),              // 球体
         new THREE.BoxGeometry(100, 100, 100),      // 直方体 
-        new THREE.PlaneGeometry(200, 200),    // 平面
-        new THREE.TetrahedronGeometry(100, 0),  // カプセル形状
-        new THREE.ConeGeometry(100, 100, 32),     // 三角錐
+        new THREE.PlaneGeometry(200, 200),         // 平面
+        new THREE.TetrahedronGeometry(100, 0),     // カプセル形状
+        new THREE.ConeGeometry(100, 100, 32),      // 三角錐
         new THREE.CylinderGeometry(50, 50, 100, 32), // 円柱
         new THREE.TorusGeometry(50, 30, 16, 100)     // ドーナツ形状
     ];

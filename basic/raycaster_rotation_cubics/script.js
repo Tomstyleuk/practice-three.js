@@ -12,14 +12,14 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.z = 5;
 
-//3. create renderer & set antialias(物体の輪郭がギザギザになることを抑える)
 //canvasを使用して、html内のid:myCanvasに出力する宣言
 // const renderer = new THREE.WebGLRenderer({
-// canvas: document.querySelector('#myCanvas')
-// });
-
+    // canvas: document.querySelector('#myCanvas')
+    // });
+    
+//3. create renderer & set antialias(物体の輪郭がギザギザになることを抑える)
 const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setClearColor("#e5e5e5");
+renderer.setClearColor("#e5e5e5");  //set background-color
 
 //4. set a Size
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -42,7 +42,6 @@ window.addEventListener('resize', () => {
  Canvasオブジェクト上にある全てのオブジェクトに対して、透明な線がどのオブジェクトに当たったのかを判定する */
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
-
 
 
 //7.create a box geometry             (x, y, z)
