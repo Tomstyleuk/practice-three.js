@@ -31,11 +31,14 @@ function init() {
     //5. create a directional light
     const directionalLight = new THREE.DirectionalLight(0xffffff);
     directionalLight.position.set(1, 1, 1);
+
+    const light = new THREE.AmbientLight( 0x404040 ); // soft white light
     scene.add(directionalLight);
+    scene.add(light);
 
     //6. create a material
     const material = new THREE.MeshStandardMaterial({
-        map: new THREE.TextureLoader().load('../img/earthmap1k.jpg'),
+        map: new THREE.TextureLoader().load('img/earthmap1k.jpg'),
         side: THREE.DoubleSide
     });
 
@@ -75,13 +78,19 @@ function init() {
     tick();
     function tick() {
         // 毎フレーム角度を0.5度ずつ足していく
-        rot += 0.5;
+        rot += 1.0;
 
         // ラジアンに変換する
         const radian = (rot * Math.PI) / 180;
 
         // 角度に応じてカメラの位置を設定, カメラの位置の設定はcameraオブジェクトのpositionプロパティーに数値を代入する
+        //動きの演出については、フレーム毎に衛星の配置角度を0.5度ずつ加算し、それをカメラの座標に変換しています。カメラの座標は三角関数（sinとcos）を使って、角度から求めています。1000という値は円の半径
+
+        // view.camera.x = 円周の半径 * Math.sin(角度 * Math.PI / 180);
+        // view.camera.z = 円周の半径 * Math.cos(角度 * Math.PI / 180);
+
         camera.position.x = 1000 * Math.sin(radian);
+        // camera.position.y = 1000 * Math.cos(radian);
         camera.position.z = 1000 * Math.cos(radian);
 
         // 原点方向を見つめる
