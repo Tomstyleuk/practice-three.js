@@ -45,6 +45,7 @@ function init() {
 
     //8.create an array for geometries
     const geometryList = [
+        new THREE.IcosahedronBufferGeometry(100, 50),
         new THREE.SphereGeometry(50),              // 球体
         new THREE.BoxGeometry(100, 100, 100),      // 直方体 
         new THREE.PlaneGeometry(200, 200),         // 平面
