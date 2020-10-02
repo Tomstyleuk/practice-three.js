@@ -33,6 +33,7 @@ function init() {
     directionalLight.position.set(1, 1, 1);
 
     const light = new THREE.AmbientLight( 0x404040 ); // soft white light
+    light.position.set(1, 1, 1);
     scene.add(directionalLight);
     scene.add(light);
 
@@ -45,7 +46,7 @@ function init() {
     /*//////////////// TEST 画像を読み込む ////////////////
     画像を使うには読み込み処理を作る必要があります。THREE.TextureLoaderクラスを使う */
     const loader = new THREE.TextureLoader();
-    const texture = loader.load('earthmap1k.jpg');
+    const texture = loader.load('img/earthmap1k.jpg');
 
     // マテリアルにテクスチャーを設定 => マテリアルに画像を使用する
     const material = new THREE.MeshStandardMaterial({
@@ -62,8 +63,6 @@ function init() {
     
     //8. create a mesh
     const earthMesh = new THREE.Mesh(geometry, material);
-    earthMesh.rotation.y += 0.02;
-
     scene.add(earthMesh);
 
     //9. create a stars
