@@ -37,16 +37,33 @@ function init() {
     scene.add(light);
 
     //6. create a material
+    // const material = new THREE.MeshStandardMaterial({
+    //     map: new THREE.TextureLoader().load('img/earthmap1k.jpg'),
+    //     side: THREE.DoubleSide
+    // });
+
+    /*//////////////// TEST 画像を読み込む ////////////////
+    画像を使うには読み込み処理を作る必要があります。THREE.TextureLoaderクラスを使う */
+    const loader = new THREE.TextureLoader();
+    const texture = loader.load('earthmap1k.jpg');
+
+    // マテリアルにテクスチャーを設定 => マテリアルに画像を使用する
     const material = new THREE.MeshStandardMaterial({
-        map: new THREE.TextureLoader().load('img/earthmap1k.jpg'),
+        map: texture,
         side: THREE.DoubleSide
     });
+    ////////////////////////////////////////////////
+
+
+
 
     //7. create a geometry 
     const geometry = new THREE.SphereGeometry(300, 30, 30);
     
     //8. create a mesh
     const earthMesh = new THREE.Mesh(geometry, material);
+    earthMesh.rotation.y += 0.02;
+
     scene.add(earthMesh);
 
     //9. create a stars
@@ -78,7 +95,7 @@ function init() {
     tick();
     function tick() {
         // 毎フレーム角度を0.5度ずつ足していく
-        rot += 1.0;
+        rot += 0.6;
 
         // ラジアンに変換する
         const radian = (rot * Math.PI) / 180;
