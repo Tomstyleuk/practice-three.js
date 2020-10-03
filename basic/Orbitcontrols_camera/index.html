@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>THREE.OrbitControls</title>
-
 </head>
 <body>
     <!-- https://ics.media/tutorial-three/camera_orbitcontrols/ 
@@ -56,6 +55,7 @@
             camera.updateProjectionMatrix();
         })
 
+        /*////////////////// many cubics are rotating wehn mouse over  ///////////////////*/
         /*/////////////////////////////////////*/
         /*------------- TEST -------------*/
         //7.create a box geometry             (x, y, z)
@@ -119,9 +119,6 @@
                 this.tl.to(intersects[i].object.rotation, .5, {y: Math.PI* 1.5, ease: Expo.easeOut}, "=-1.5"); //回転数
             }
     }   // ENDE onMouseMove
-
-
-
         /*/////////////////////////////////////*/
 
         /*--------------5. create a camera controller --------------*/
