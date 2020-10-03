@@ -4,9 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>THREE.OrbitControls</title>
 </head>
 <body>
+    <!-- https://ics.media/tutorial-three/camera_orbitcontrols/ 
+    Three.jsにはカメラの動きを自動的に制御する THREE.OrbitControls クラスが存在する
+    立体を中心にして周回軌道を描くように、カメラを配置するのが便利
+    THREE.OrbitControlsクラスのコンストラクターにカメラのインスタンスを指定して, これだけで自動的にマウスと連動してインタラクションが効くようになる
+
+    マウス操作で次のようにカメラを制御できる
+    - オービット（周回軌道）: 左ボタンでドラッグ
+    - ズーム: マウスホイール
+    - パン: 右ボタンでドラッグ
+
+    -->
+
+    <canvas id="myCanvas"></canvas>
+
+    <script>
+    //waiting for loading the page
+    window.addEventListener('load', init);
+
+    function init() {
+        //1. set Size
+        const width = 1000;
+        const height = 600;
+
+        //2. create a renderer
+        const renderer = new THREE.WebGLRenderer({
+            canvas: document.querySelector('#myCanvas')
+        });
+        renderer.setSize(width, height);
+
+        //3. create a Scenen
+        const scenen = new THREE.Scene();
+        //4. create a camera 
+        const camera = new THREE.PerspectiveCamera(45, width / height);
+        // Set the initial coordinates of the camera
+        camera.position.set(0, 0, 1000);
+
+        /*--------------5. create a camera controller --------------*/
+        const controls = new THREE.OrbitControls(camera);
+
+        //6. create a mesh from geometry and material
+        const mesh = new THREE.Mesh (
+            new THREE.BoxGeometry(300, 300, 300),
+            new THREE.MeshNormalMaterial()
+        );
+        scene.add(mesh);
+
+        //7.loop event
+        tick();
+        function tick() {
+            renderer.render(scene, camera);
+            requestAnimationFrame(tick);
+        }   //Ende tick
+
+
+    }   //ENDE init
     
+    
+    
+    
+    </script>
+    
+    <script src="../../OrbitControls.js"></script>
+    <script src="../../three.js"></script>
 </body>
 </html>
