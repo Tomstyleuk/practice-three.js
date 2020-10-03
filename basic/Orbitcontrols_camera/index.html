@@ -33,16 +33,96 @@
 
         //2. create a renderer
         const renderer = new THREE.WebGLRenderer({
+            antialias: true,
             canvas: document.querySelector('#myCanvas')
         });
+        renderer.setClearColor("#e5e5e5");  //set background colour
         renderer.setSize(width, height);
 
         //3. create a Scenen
         const scene = new THREE.Scene();
         //4. create a camera 
-        const camera = new THREE.PerspectiveCamera(45, width / height);
+        const camera = new THREE.PerspectiveCamera(50, width / height);
         // Set the initial coordinates of the camera
         camera.position.set(0, 0, 1000);
+
+        //6. set responsive a window size
+        window.addEventListener('resize', () => {
+            renderer.setSize(width, height);
+
+            //readjust a camera aspect ratio, カメラのアスペクト比を正す
+            camera.aspect = width / height;
+
+            camera.updateProjectionMatrix();
+        })
+
+        /*/////////////////////////////////////*/
+        /*------------- TEST -------------*/
+        //7.create a box geometry             (x, y, z)
+        const geometry = new THREE.BoxGeometry(2, 2, 2);
+
+        //8.create a mesh Material
+        const material = new THREE.MeshLambertMaterial({color: 0xF7F7F7});
+
+        const raycaster = new THREE.Raycaster();    
+        const mouse = new THREE.Vector2();
+
+        /*------------ add more cubes  ------------ */
+        for(let meshX = 0; meshX < 15; meshX++) {
+
+            let mesh = new THREE.Mesh(geometry, material);
+            mesh.position.x = (Math.random() - 0.5) * 10;
+            mesh.position.y = (Math.random() - 0.5) * -15;
+            mesh.position.z = (Math.random() - 0.5) * -5;
+            scene.add(mesh);
+            meshX + 1;
+        }
+
+        //9. light
+        const light = new THREE.PointLight(0xFFFFFF, 1, 1000);
+        light.position.set(0,0,0);
+        scene.add(light);
+
+        // another light
+        const light2 = new THREE.PointLight(0xFFFFFF, 2, 1000);
+        light2.position.set(0, 0, 25);
+        scene.add(light2);
+
+        // Event onMouseMove
+        function onMouseMove(event) {
+            event.preventDefault();
+
+            mouse.x = ( event.clientX / width ) * 2 - 1;
+            mouse.y = - ( event.clientY / height ) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+
+            // when you hover the mouse, cubics are moving 
+            const intersects = raycaster.intersectObjects(scene.children, true);
+            for (let i = 0; i < intersects.length; i++) {
+
+                //when mousemove => randomly cubic's color is changing 
+                const r = Math.round(Math.random() * 255);
+                const g = Math.round(Math.random() * 255);
+                const b = Math.round(Math.random() * 255);
+                intersects[i].object.material.color.set(`rgb(${r},${g},${b})`); 
+                //intersects[i].object.material.color.set(0xff0000);
+
+                //TimelineMax => TweenMax method
+                this.tl = new TimelineMax().delay(.3);   //cube rotation
+                //this.tl = new TimelineMax({paused: true}); //not rotation
+                this.tl.to(intersects[i].object.scale, 1, {x: 2, ease: Expo.easeOut});
+                this.tl.to(intersects[i].object.scale, .5, {x: .5, ease: Expo.easeOut});
+                this.tl.to(intersects[i].object.position, .5, {x: 2, ease: Expo.easeOut});
+                this.tl.to(intersects[i].object.position, .15, {y: 2, ease: Expo.easeOut}); //これを追加したら、hover後は全部一箇所に集まり重なる
+                this.tl.to(intersects[i].object.position, .95, {z: 2, ease: Expo.easeOut}); //これを追加したら、hover後は全部一箇所に集まり重なる
+                this.tl.to(intersects[i].object.rotation, .5, {y: Math.PI* 1.5, ease: Expo.easeOut}, "=-1.5"); //回転数
+            }
+    }   // ENDE onMouseMove
+
+
+
+        /*/////////////////////////////////////*/
 
         /*--------------5. create a camera controller --------------*/
         const controls = new THREE.OrbitControls(camera);
@@ -52,11 +132,13 @@
 
         //6. create a mesh from geometry and material
         const mesh = new THREE.Mesh (
-            new THREE.BoxGeometry(300, 300, 300),
+            // new THREE.BoxGeometry(300, 300, 300),
             // new THREE.ConeGeometry(300, 300, 300),
+            new THREE.IcosahedronBufferGeometry(6, 0),
             new THREE.MeshNormalMaterial()
         );
         scene.add(mesh);
+
 
         //7.loop event
         tick();
@@ -68,6 +150,7 @@
             requestAnimationFrame(tick);
         }   //Ende tick
 
+        window.addEventListener('mousemove', onMouseMove);
 
     }   //ENDE init
     
@@ -76,7 +159,7 @@
     <!-- <script src="../../OrbitControls.js"></script> -->
     <script src="../../three.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.101.1/examples/js/controls/OrbitControls.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script> -->
 </body>
 </html>

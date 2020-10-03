@@ -91,6 +91,7 @@ const light2 = new THREE.PointLight(0xFFFFFF, 2, 1000);
 light2.position.set(0, 0, 25);
 scene.add(light2);
 
+//loop Event
 const render = function() {
     requestAnimationFrame(render);
     renderer.render(scene, camera);
@@ -101,8 +102,8 @@ const render = function() {
     // mesh.scale.x += 0.01;
 }
 
+// Event onMouseMove
 function onMouseMove(event) {
-    
     event.preventDefault();
 
     mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
