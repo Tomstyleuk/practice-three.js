@@ -32,17 +32,47 @@ function init() {
     
     ////////////////////////////////////////
     /*----------------- 2.MeshNormalMaterial ノーマルのカラーをRGBで可視化するマテリアル -----------------*/
-    const material = new THREE.MeshNormalMaterial({
-        color: 0x6699ff,
-        flatShading: true   //球体の上に線を描く
-    });
+    // const material = new THREE.MeshNormalMaterial({
+    //     color: 0x6699ff,
+    //     flatShading: true   //球体の上に線を描く
+    // });
+
+    ////////////////////////////////////////
+    /*----------------- 3.MeshLambertMaterial ランバート・シェーディングと言う、光沢感のないマットな質感を表現できる。陰ができるため奥行き感を表現できる。陰影を必要とするマテリアルなので、ライトが必要 -----------------*/
+    // const material = new THREE.MeshLambertMaterial({
+    //     color: 0x10b5b5,
+    //     emmisive: 0xbc8722, //放射性の光, Emissive (light) color of the material, essentially a solid color unaffected by other lighting. 
+    //     wireframe: true
+    // });
+
+    // ////////////////////////////////////////
+    // /*----------------- 4.MeshPhongMaterial　フォン・シェーディングと言う、光沢感のある質感を表現できるマテリアル -----------------*/
+    // const material = new THREE.MeshPhongMaterial({
+    //     color: 0x6699ff,
+    //     specular: 0xf2000e,
+    //     shininess: 10,   //色がついた艶を出す
+    //     // flatShading: true
+    // });
 
 
     ////////////////////////////////////////
-    /*----------------- 3.MeshLambertMaterial ノーマルのカラーをRGBで可視化するマテリアル -----------------*/
+    /*----------------- 5.MeshToonMaterial アニメのようなトゥーンシェーディングを実現できるマテリアル -----------------*/
+    const material = new THREE.MeshToonMaterial({
+        color: 0x6699ff
+    });
 
 
 
+
+
+    //lightning 
+    const directionalLight = new THREE.DirectionalLight(0xFFFFFF);
+    directionalLight.position.set(1, 1, 1);
+  
+    /* AmbientLight */
+    const light = new THREE.AmbientLight( 0x404040 ); //soft white light
+    scene.add(directionalLight);
+    scene.add(light);
 
 
 
@@ -53,6 +83,13 @@ function init() {
     function tick() {
         mesh.rotation.x += 0.01;
         mesh.rotation.y += 0.01;
+
+        // rotating the light
+        directionalLight.position.set(
+        500 * Math.sin(Date.now() / 500),
+        500 * Math.sin(Date.now() / 1000),
+        500 * Math.cos(Date.now() / 500)
+        );
 
         //rendering
         renderer.render(scene, camera);
