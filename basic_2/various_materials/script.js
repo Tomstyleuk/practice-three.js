@@ -55,12 +55,23 @@ function init() {
     // });
 
 
-    ////////////////////////////////////////
-    /*----------------- 5.MeshToonMaterial アニメのようなトゥーンシェーディングを実現できるマテリアル -----------------*/
-    const material = new THREE.MeshToonMaterial({
-        color: 0x6699ff
-    });
+    // ////////////////////////////////////////
+    // /*----------------- 5.MeshToonMaterial アニメのようなトゥーンシェーディングを実現できるマテリアル -----------------*/
+    // const material = new THREE.MeshToonMaterial({
+    //     color: 0x6699ff
+    // });
 
+
+    ////////////////////////////////////////
+    /*----------------- 5.THREE.MeshStandardMaterial 物理ベースレンダリングのマテリアルで, 物理ベースレンダリングは多くの3Dアプリケーションで実装されている（UnityやUnrealなど）. 光の反射や散乱など現実の物理現象を再現できる 
+    roughnessプロパティーの値によって、光沢感の有無を調整できます。
+    0のときは光沢の質感、1のときはマットな質感になる -----------------*/
+    const material = new THREE.MeshStandardMaterial({
+        color: 0x6699FF, 
+        roughness: 0,
+        metalness: 0,
+        // flatShading: true //球体上に線が描かれる
+    });
 
 
 
