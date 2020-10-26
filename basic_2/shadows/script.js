@@ -74,6 +74,4 @@ function init() {
         requestAnimationFrame(tick);
     }
 
-
-
 } // Ende init
