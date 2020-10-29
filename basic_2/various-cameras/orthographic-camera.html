@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Various Cameras</title>
+    <title>Orthographic Cameras</title>
     <script>
         //loading a page
         window.addEventListener('load', init);
@@ -27,8 +27,7 @@
             //create a scene
             const scene = new THREE.Scene();
             //create a camera (fov(field of view), aspact, near, far)
-            const camera = new THREE.PerspectiveCamera(60, width / height);
-            //camera.fov = 60;  how to change the fov
+            const camera = new THREE.OrthographicCamera(-480, +480, 270, -270, 1, 1000);   //camera.fov = 60;  how to change the fov
 
             //crete a light 
             {
@@ -50,9 +49,10 @@
             // 地面を作成
             {
                 //create a floor
-                const texture = new THREE.TextureLoader().load('harry2.jpg');
+                const texture = new THREE.TextureLoader().load('img/harry2.jpg');
                 //wrapS = This defines how the texture is wrapped HORIZONTALLY and corresponds to U in UV mapping.
                 texture.wrapS = texture.wrapT = THREE.RepeatWrapping; // リピート可能に
+
                 texture.repeat.set(10, 10); // 10x10マスに設定
 
                 //THREE.NearestFilterは、最も近いテクセルの値を使用します。
@@ -77,7 +77,7 @@
                 const material = new THREE.MeshStandardMaterial({
                     color: 0x2299ff,
                     roughness: 0.1, 
-                    metalness: 0.2
+                    metalness: 0.4
                 });
                 const geometry = new THREE.BoxGeometry(45, 45, 45);
 
@@ -87,8 +87,6 @@
                     box.position.x = Math.round((Math.random() - 0.5) * 19) * 50 + 25;
                     box.position.y = 25;
                     box.position.z = Math.round((Math.random() - 0.5) * 19) * 50 + 25;
-                    // 原点方向を見つめる
-                    camera.lookAt(new THREE.Vector3(0, 0, 0));
 
                     // set a shadow
                     box.receiveShadow = true;
@@ -105,11 +103,9 @@
                 camera.position.z = 500 * Math.cos(Date.now() / 2000);
                 // 原点方向を見つめる
                 camera.lookAt(new THREE.Vector3(0, 0, 0));
-
                 renderer.render(scene, camera)
                 requestAnimationFrame(tick); 
             }
-
 
         } //Ende init
     </script>
