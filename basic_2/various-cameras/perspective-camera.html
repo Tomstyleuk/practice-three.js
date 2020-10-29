@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Various Cameras</title>
+    <script>
+        //loading a page
+        window.addEventListener('load', init);
+        
+        function init() {
+            const width = innerWidth;
+            const height = innerHeight;
+
+            //create a renderer
+            const renderer = new THREE.WebGLRenderer({
+                canvas: document.querySelector('#myCanvas'),
+                anitials: true
+            });
+            //画像の解像度を鮮明にする
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(width, height);
+            //enabled to set shadow
+            renderer.shadowMap.enabled = true;
+
+            //create a scene
+            const scene = new THREE.Scene();
+            //create a camera (fov(field of view), aspact, near, far)
+            const camera = new THREE.PerspectiveCamera(20, width / height);
+            //camera.fov = 60;  how to change the fov
+
+            //crete a light 
+            {
+                const spotLight = new THREE.SpotLight(
+                    0xffffff, //color - default is 0xffffff
+                    4,        //intensity ライトの強度/強度 default is 1
+                    2000,     //distance 光の最大範囲 default is 0
+                    Math.PI / 5, //angle-上限がMath.PI / 2である方向からの光分散の最大角度。
+                    0.2, //ペナンブラ - ペナンブラが原因で減衰するスポットライトコーンの割合。ゼロから1までの値を取ります。デフォルトはゼロです。
+                    1.5 //減衰-ライトの距離に沿ってライトが暗くなる量。
+                );
+                spotLight.position.set(500, 300, 500);
+                spotLight.castShadow = true; // 影を落とす設定
+                spotLight.shadow.mapSize.width = 2048;
+                spotLight.shadow.mapSize.height = 2048;
+                scene.add(spotLight);
+            }
+
+            // 地面を作成
+            {
+                //create a floor
+                const texture = new THREE.TextureLoader().load('harry2.jpg');
+                //wrapS = This defines how the texture is wrapped HORIZONTALLY and corresponds to U in UV mapping.
+                texture.wrapS = THREE.ReapeatWrapping; // リピート可能に
+
+                texture.repeat.set(10, 10); // 10x10マスに設定
+
+                //THREE.NearestFilterは、最も近いテクセルの値を使用します。
+                texture.magFilter = THREE.NearestFilter; // アンチエイリアスを外す
+
+                const floor = new THREE.Mesh(
+                    new THREE.PlaneGeometry(1000, 1000),
+                    new THREE.MeshStandardMaterial({
+                        map: texture,
+                        roughness: 0.0,
+                        metalness: 0.6
+                    })
+                );
+                floor.rotation.x = -Math.PI / 2;   // x = 横軸
+                floor.receiveShadow = true; //set a shadow
+                scene.add(floor);
+            }
+
+            // マス目を作成
+            {
+                //create a square material and geometry
+                const material = new THREE.MeshStandardMaterial({
+                    color: 0x22dd22,
+                    roughness: 0.1, 
+                    metalness: 0.4
+                });
+                const geometry = new THREE.BoxGeometry(45, 45, 45);
+
+                //create some boxes and set a position randomly
+                for(i = 0; i < 60; i++) {
+                    const box = new THREE.Mesh(geometry, material);
+                    box.position.x = Math.round((Math.random() - 0.5) * 19) * 50 + 25;
+                    box.position.y = 25;
+                    box.position.z = Math.round((Math.random() - 0.5) * 19) * 50 + 25;
+
+                    // set a shadow
+                    box.receiveShadow = true;
+                    box.castShadow = true;
+                    scene.add(box);
+                }
+            }
+
+            tick();
+
+            function tick() {
+                camera.position.x = 500 * Math.sin(Date.now() / 2000);
+                camera.position.y = 250;
+                camera.position.z = 500 * Math.cos(Date.now() / 2000);
+            }
+
+            // 原点方向を見つめる
+            renderer.render(scene, camera)
+            requestAnimationFrame(tick); 
+
+        } //Ende init
+    </script>
+
+</head>
+<body>
+    
+    <canvas id="myCanvas"></canvas>
+    <script src="../../three.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/three@0.101.1/examples/js/controls/OrbitControls.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script> -->
+    <!-- <script src="https//cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script> -->
+</body>
+</html>
