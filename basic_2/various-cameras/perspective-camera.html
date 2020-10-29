@@ -88,6 +88,8 @@
                     box.position.x = Math.round((Math.random() - 0.5) * 19) * 50 + 25;
                     box.position.y = 25;
                     box.position.z = Math.round((Math.random() - 0.5) * 19) * 50 + 25;
+                    // 原点方向を見つめる
+                    camera.lookAt(new THREE.Vector3(0, 0, 0));
 
                     // set a shadow
                     box.receiveShadow = true;
