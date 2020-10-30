@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Harry Song Lists</title>
+    <script>
+      //waiting for loading the page
+      window.addEventListener("load", init);
+
+      function init() {
+        //1. set Size
+        const width = innerWidth;
+        const height = innerHeight;
+
+        //2. create a renderer
+        const renderer = new THREE.WebGLRenderer({
+          antialias: true,
+          canvas: document.querySelector("#myCanvas")
+        });
+        renderer.setClearColor("#2a2a2a"); //set background colour
+        renderer.setSize(width, height);
+
+        //3. create a Scenen
+        const scene = new THREE.Scene();
+        //4. create a camera
+        const camera = new THREE.PerspectiveCamera(50, width / height);
+        // Set the initial coordinates of the camera
+        camera.position.set(0, 0, 1000);
+
+        //6. set responsive a window size
+        window.addEventListener("resize", () => {
+          renderer.setSize(width, height);
+
+          //readjust a camera aspect ratio, カメラのアスペクト比を正す
+          camera.aspect = width / height;
+
+          camera.updateProjectionMatrix();
+        });
+
+    
+        /*------------- TEST -------------*/
+        //7.create a box geometry             (x, y, z)
+        //const geometry = new THREE.PlaneGeometry(30, 40);
+
+        //8.create a mesh Material
+        const material = new THREE.MeshStandardMaterial({
+          color: 0xffffff,
+          map: new THREE.TextureLoader().load("various-cameras/img/harry2.jpg"),
+          side: THREE.DoubleSide,
+          roughness: 0.1, 
+          metalness: 0.3
+        });
+
+        //9. light
+        const light = new THREE.PointLight(0xffffff, 1, 1000);
+        light.position.set(0, 0, 0);
+        scene.add(light);
+
+        // another light
+        const light2 = new THREE.PointLight(0xffffff, 2, 1000);
+        light2.position.set(0, 0, 25);
+        scene.add(light2);
+
+        /*--------------5. create a camera controller --------------*/
+        const controls = new THREE.OrbitControls(camera);
+        // 滑らかにカメラコントローラーを制御する
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.9;
+
+        //6. create a mesh from geometry and material
+        const mesh = new THREE.Mesh(
+          new THREE.PlaneGeometry(30, 40),
+          new THREE.MeshStandardMaterial({
+            color: 0xffffff,
+            map: new THREE.TextureLoader().load(
+              "various-cameras/img/harry2.jpg"
+            ),
+            side: THREE.DoubleSide
+          })
+        );
+        scene.add(mesh);
+
+        //7.loop event
+        tick();
+        function tick() {
+          // カメラコントローラーを更新
+          controls.update();
+
+          renderer.render(scene, camera);
+          requestAnimationFrame(tick);
+        } //Ende tick
+      } //ENDE init
+    </script>
+  </head>
+  <body>
+    <!-- https://ics.media/tutorial-three/camera_orbitcontrols/ 
+    Three.jsにはカメラの動きを自動的に制御する THREE.OrbitControls クラスが存在する
+    立体を中心にして周回軌道を描くように、カメラを配置するのが便利
+    THREE.OrbitControlsクラスのコンストラクターにカメラのインスタンスを指定して, これだけで自動的にマウスと連動してインタラクションが効くようになる
+
+    マウス操作で次のようにカメラを制御できる
+    - オービット（周回軌道）: 左ボタンでドラッグ
+    - ズーム: マウスホイール
+    - パン: 右ボタンでドラッグ
+    -->
+
+    <canvas id="myCanvas"></canvas>
+
+    <!-- <script src="../OrbitControls.js"></script> -->
+    <script src="../three.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.101.1/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script> -->
+  </body>
+</html>
