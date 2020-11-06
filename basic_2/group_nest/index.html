@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta charset="utf-8" />
     <title>Group and Nest(3D object 入れ子構造)</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
     <script>
+      // ページの読み込みを待つ
       window.addEventListener('load', init);
 
       function init() {
@@ -15,116 +15,62 @@
 
         //2. create renderer
         const renderer = new THREE.WebGLRenderer({
-            canvas: document.querySelector('#myCanvas')
+          canvas: document.querySelector('#myCanvas')
         });
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(width, height);
 
         //3. create a scene 
         const scene = new THREE.Scene();
+
         //4. create a camera 
-        const camera = new THREE.PerspectiveCamera(50, width / height);
-        camera.position.set(-1000, 150, 150);
-        camera.lookAt(new THREE.Vector3(0,0,0));
+        const camera = new THREE.PerspectiveCamera(45, width / height);
+        camera.position.set(-100, 150, 500);
+        camera.lookAt(new THREE.Vector3(0, 0, 0));
 
         //5. create a floor
         scene.add(new THREE.GridHelper(600));
-        
+        scene.add(new THREE.AxesHelper(300));
+
+        //////////// create a group //////////////
         /* An axis object to visualize the 3 axes in a simple way.
         簡単な方法で3つの軸を視覚化する軸オブジェクト
         The X axis is red. The Y axis is green. The Z axis is blue. 
         AxesHelper( size : Number )
         */
-        scene.add(new THREE.AxesHelper(300));
-
-        //////////// create a group //////////////
         const group = new THREE.Group();
         scene.add(group); // add group in scene
 
-        for(let  i = 0; i < 10; i++) {
-            const material = new THREE.MeshNormalMaterial();
-            const geometry = new THREE.BoxGeometry(30,30,30);
-            const mesh = new THREE.Mesh(material, geometry);
+        for (let i = 0; i < 10; i++) {
+          // 直方体を作成
+          const material = new THREE.MeshNormalMaterial();
+          const geometry = new THREE.SphereGeometry(30, 30, 30);
+          const mesh = new THREE.Mesh(geometry, material);
 
-            // 配置座標を計算
-            const radian = (i / 10) * Math.PI * 2; //Math.PI =　円周率
-            mesh.position.set(
-            200 * Math.cos(radian), //x
-            300,                    //y
-            200 * Math.sin(radian)  //z
-            );
+          // 配置座標を計算
+          const radian = (i / 10) * Math.PI * 2; //Math.PI =　円周率
+          mesh.position.set(
+            200 * Math.cos(radian), // X座標
+            30,                     // Y座標
+            200 * Math.sin(radian) // Z座標
+          );
 
-            //add a group
-            group.add(mesh);
+          // add mesh in group
+          group.add(mesh);
         }
 
         tick();
         function tick() {
-            group.rotation.y += 0.01;
+          group.rotation.y += 0.01;
 
-            //rendering
-            renderer.render(scene, camera);
-            requestAnimationFrame(tick);
+          // レンダリング
+          renderer.render(scene, camera);
+          requestAnimationFrame(tick);
         }
-
-      }// Ende init
-
-
-
+      } //Ende init
     </script>
-
-    <style>
-      body {
-        margin: 0;
-        height: 100vh;
-        /* height: auto; */
-        width: 100vw;
-        background-color: white;
-      }
-
-      h1 {
-        /* font-family: "Montserrat"; */
-        font-family: sans-serif;
-        font-size: 3em;
-        border: 5px solid white;
-        color: white;
-        position: absolute;
-        top: 3em;
-        left: 1em;
-        letter-spacing: 4px;
-        mix-blend-mode: difference;
-        line-height: 0.8em;
-        padding: 2em;
-        text-transform: uppercase;
-        width: auto;
-      }
-
-      h2 {
-        /* font-family: "Montserrat"; */
-        font-family: sans-serif;
-        font-size: 3em;
-        /* border: 5px solid white; */
-        color: white;
-        position: absolute;
-        top: 4em;
-        left: 2.3em;
-        letter-spacing: 4px;
-        mix-blend-mode: difference;
-        line-height: 0.8em;
-        padding: 2em;
-        text-transform: uppercase;
-        width: auto;
-      }
-    </style>
   </head>
   <body>
-    <h1>Harry styles</h1>
-    <h2>Fine Line</h2>
-    <canvas id="myCanvas"> </canvas>
-
-    <script src="../../three.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/three@0.101.1/examples/js/controls/OrbitControls.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
-    <!-- <script src="https//cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script> -->
+    <canvas id="myCanvas"></canvas>
   </body>
 </html>
