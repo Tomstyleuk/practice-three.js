@@ -41,27 +41,33 @@ THREE.Object3DクラスのgetWorldPosition()メソッドを使うことで、ワ
         const plane = new THREE.AxesHelper(300);
         scene.add(plane);
 
+        //Group
         const group = new THREE.Group();
         scene.add(group);
 
         let targetMesh = new THREE.Mesh();
 
         for (let i = 0; i < 10; i++) {
-          // 直方体を作成
-          const material =
+
+            const material =
             i === 0
               ? new THREE.MeshNormalMaterial()
               : new THREE.MeshBasicMaterial();
           const geometry = new THREE.SphereGeometry(30, 30, 30);
           const mesh = new THREE.Mesh(geometry, material);
           const radian = (i / 10) * Math.PI * 2;
-          mesh.position.set(200 * Math.cos(radian), 0, 200 * Math.sin(radian));
+
+          mesh.position.set(200 * Math.cos(radian),
+            0,
+            200 * Math.sin(radian));
           group.add(mesh);
 
           if (i === 0) {
             targetMesh = mesh;
           }
         }
+
+    
 
         // Line
         const geometry = new THREE.Geometry();
