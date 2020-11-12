@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Screen Corrdinate(スクリーン座標)</title>
+    <script src="../three.js"></script>
+    <script>
+      //loading a page
+      window.addEventListener("load", init);
+
+      function init() {
+        const width = innerWidth;
+        const height = innerHeight;
+        let rot = 0;
+
+        //create a renderer
+        const renderer = new THREE.WebGLRenderer({
+            canvas: document.querySelector('#myCanvas')
+        });
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(width, height);
+
+        // Scene 
+        const scene = new THREE.Scene();
+
+        //Camera 
+        const camera = new THREE.PerspectiveCamera(50, width / height);
+        camera.position.set(100, 150, 500);
+        camera.lookAt(new THREE.Vector3(0,0,0));
+
+        //floor 
+        const plane2 = new THREE.GridHelper(600);
+        scene.add(plane2);
+        const plane = new THREE.AxesHelper(300);
+        scene.add(plane);
+
+        //box geometry 
+        const material = new THREE.MeshNormalMaterial();
+        const geometry = new THREE.SphereGeometry(30,30,30);
+        const mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+
+        tick();
+        function tick() {
+            rot += 0.3; // 毎フレーム角度を0.3度ずつ足していく
+
+            //change into radian
+            const radian = (rot * Math.PI) / 180;
+
+            // 角度に応じてカメラの位置を設定
+            mesh.position.x = 200 * Math.sin(radian);
+            mesh.position.y = 50;
+            mesh.position.z = 200 * Math.cos(radian);
+
+            renderer.render(scene, camera);
+
+            // get the World coordinate 
+            const project = mesh.position.project('camera');
+            const sx = (width / 2) * (+project.x + 1.0);
+            const sy = (height / 2) * (-project.y + 1.0);
+
+            const tf = document.getElementById('hud');
+            // テキストフィールドにスクリーン座標を表示
+            tf.innerHTML = `👆スクリーン座標(${Math.round(sx)}, ${Math.round(
+                sy
+            )})`;
+            tf.style.transform = `translate(${sx}px, ${sy}px)`;
+
+            // SVGでラインを描画
+            const line = document.getElementById('svgLine');
+            line.setAttribute('x2', sx);
+            line.setAttribute('y2', sy);
+
+          requestAnimationFrame(tick);
+        }
+
+    } //Ende init
+    </script>
+
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        /* height: auto; */
+        width: 100vw;
+        background-color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 親のタグの基準点をリセット -->
+    <div style="position:relative; overflow: hidden; width: 960px; height: 540px;">
+      <!-- Three.js用のcanvasタグ -->
+      <canvas id="myCanvas" style="position: absolute; top: 0; left: 0;"></canvas>
+
+      <!-- ライン描画用のSVG -->
+      <svg
+        width="960"
+        height="540"
+        style="position: absolute; top: 0; left: 0;"
+      >
+        <g stroke="white">
+          <line id="svgLine" x1="0" y1="0" x2="0" y2="0" stroke-width="3" />
+        </g>
+      </svg>
+
+      <!-- 座標表示用のdivタグ -->
+      <div id="hud" style="position: absolute; top: 0; left: 0; background: white">
+    </div>
+    </div>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/three@0.101.1/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script> -->
+    <!-- <script src="https//cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script> -->
+  </body>
+</html>
