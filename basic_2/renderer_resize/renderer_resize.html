@@ -39,7 +39,7 @@
         /* ///// Renderer Resize ///// */
         // 初期化
         onResize();
-        
+
         // リサイズイベント発生時に実行
         window.addEventListener('resize', onResize);
 
@@ -53,6 +53,7 @@
           renderer.setSize(width, height);
 
           // カメラのアスペクト比を正す
+          //updateProjectionMatrix => Updates the camera projection matrix. カメラの投影行列を更新
           camera.aspect = width / height;
           camera.updateProjectionMatrix();
         }
