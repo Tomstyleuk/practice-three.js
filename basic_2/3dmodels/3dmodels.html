@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/collada-loader-three@0.0.3/index.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/collada-loader-three@0.0.3/index.min.js"></script> -->
     <script src="../../OrbitControls.js"></script>
     <script src="../../TDSLoader.js"></script>
     <title>Load 3D Models </title>
@@ -29,59 +29,45 @@
         //create a camera control
         const controls = new THREE.OrbitControls(camera);
 
-        const directionalLight = new THREE.directionalLight(0xffffff);
-        directionalLight.position.set(1,1,1);
+        const directionalLight = new THREE.DirectionalLight(0xffffff);
+        directionalLight.position.set(1, 1, 1);
         scene.add(directionalLight);
 
-        const ambientLight = new THREE.ambientLight(0xffffff);
+        const ambientLight = new THREE.AmbientLight(0xffffff);
         scene.add(ambientLight);
 
-        /*////////// Loading 3D Modeling Data ////////////*/
+        /*////////// Loading 3D Modeling Data 
+        読み込む処理の書き方
+        1)THREE.TDSLoaderクラスのインスタンスから、loadメソッドを利用
+        2)第一引数にはファイルパスを指定し、第二引数に読み込み後のコールバック関数を指定する
+        3)コールバック関数内で3D空間への追加処理をする
 
+        setPathメソッドを使って、3dsファイルのテクスチャーのパスがずれないように、明示的にテクスチャーが含まれるフォルダーのパスを指定
+        ////////////*/
+        const loader = new THREE.TDSLoader();
+        //set texture path
+        loader.setPath('models/3ds/portalgun/textures/');
+        //3D file Path
+        loader.load('models/3ds/portalgun/portalgun.3ds', Object => {
+            //add object into 3d scene after loading file path 
+            scene.add(Object);
+        });
+
+        tick();
+        // 毎フレーム時に実行されるループイベントです
+        function tick() {
+          // レンダリング
+          renderer.render(scene, camera);
+          requestAnimationFrame(tick);
+        }
 
 
 
     }//Ende init
-    
-    
-    
-    
-    
-    
-    
-    
-    
     </script>
-
-
   </head>
   <body>
-    <!-- 親のタグの基準点をリセット -->
-    <div
-      style="position:relative; overflow: hidden; width: 960px; height: 540px;"
-    >
-      <!-- Three.js用のcanvasタグ -->
-      <canvas
-        id="myCanvas"
-        style="position: absolute; top: 0; left: 0;"
-      ></canvas>
-
-      <!-- ライン描画用のSVG -->
-      <svg
-        width="960"
-        height="540"
-        style="position: absolute; top: 0; left: 0;"
-      >
-        <g stroke="white">
-          <line id="svgLine" x1="0" y1="0" x2="0" y2="0" stroke-width="3" />
-        </g>
-      </svg>
-
-      <!-- 座標表示用のdivタグ -->
-      <div
-        id="hud"
-        style="position: absolute; top: 0; left: 0; background: white"
-      ></div>
+      <canvas id="myCanvas"></canvas>
     </div>
   </body>
 </html>
