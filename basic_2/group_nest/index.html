@@ -6,7 +6,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
     <script>
       // ページの読み込みを待つ
-      window.addEventListener('load', init);
+      window.addEventListener("load", init);
 
       function init() {
         //1. set window size
@@ -15,15 +15,15 @@
 
         //2. create renderer
         const renderer = new THREE.WebGLRenderer({
-          canvas: document.querySelector('#myCanvas')
+          canvas: document.querySelector("#myCanvas")
         });
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(width, height);
 
-        //3. create a scene 
+        //3. create a scene
         const scene = new THREE.Scene();
 
-        //4. create a camera 
+        //4. create a camera
         const camera = new THREE.PerspectiveCamera(45, width / height);
         camera.position.set(-100, 150, 500);
         camera.lookAt(new THREE.Vector3(0, 0, 0));
@@ -35,13 +35,35 @@
         //////////// create a group //////////////
         /* An axis object to visualize the 3 axes in a simple way.
         簡単な方法で3つの軸を視覚化する軸オブジェクト
-        The X axis is red. The Y axis is green. The Z axis is blue. 
         AxesHelper( size : Number )
         */
         const group = new THREE.Group();
         scene.add(group); // add group in scene
 
+        ////////////// TEST array for images ///////////
+        var pathList = [
+          "img/harry3.png",
+          "img/harry4.jpg",
+          "img/harry5.png",
+          "img/harry6.png"
+          // "images/folder.png",
+          // "images/pdf.png",
+          // "images/B_CP003_01_4.png"
+          // ここにパスを追加していく
+        ];
+
+        const img = new Array();
+        for (let i = 0; i < pathList.length; i++) {
+          const image = new Image();
+          image.src = pathList[i];
+          img.push(image);
+        }
+        ////////////////////////////
+
+        ////////////////////////////
+
         for (let i = 0; i < 10; i++) {
+          // const texture = new THREE.TextureLoader().load('img/harry2.jpg');
           // 直方体を作成
           const material = new THREE.MeshNormalMaterial();
           const geometry = new THREE.SphereGeometry(30, 30, 30);
@@ -51,7 +73,7 @@
           const radian = (i / 10) * Math.PI * 2; //Math.PI =　円周率
           mesh.position.set(
             200 * Math.cos(radian), // X座標
-            30,                     // Y座標
+            30, // Y座標
             200 * Math.sin(radian) // Z座標
           );
 
@@ -69,8 +91,68 @@
         }
       } //Ende init
     </script>
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        /* height: auto; */
+        width: 100vw;
+        background-color: white;
+      }
+
+      h1 {
+        /* font-family: "Montserrat"; */
+        font-family: sans-serif;
+        font-size: 3em;
+        border: 5px solid white;
+        color: white;
+        position: absolute;
+        top: 3em;
+        left: 1em;
+        letter-spacing: 4px;
+        mix-blend-mode: difference;
+        line-height: 0.8em;
+        padding: 2em;
+        text-transform: uppercase;
+        width: auto;
+      }
+
+      h2 {
+        /* font-family: "Montserrat"; */
+        font-family: sans-serif;
+        font-size: 3em;
+        /* border: 5px solid white; */
+        color: white;
+        position: absolute;
+        top: 4em;
+        left: 2.3em;
+        letter-spacing: 4px;
+        mix-blend-mode: difference;
+        line-height: 0.8em;
+        padding: 2em;
+        text-transform: uppercase;
+        width: auto;
+      }
+
+      .showImg {
+        position: absolute;
+        top: 3em;
+        left: 1em;
+      }
+    </style>
   </head>
   <body>
+    <!-- <h1>Harry styles</h1>
+    <h2>Fine Line</h2> -->
+    <section class="gallery">
+      <div class="gallery__inner inner">
+        <h2 class="gallery__title title"></h2>
+        <ul class="gallery__list">
+          <li class="gallery__item"></li>
+        </ul>
+      </div>
+    </section>
+    <div class="showImg"></div>
     <canvas id="myCanvas"></canvas>
   </body>
 </html>
